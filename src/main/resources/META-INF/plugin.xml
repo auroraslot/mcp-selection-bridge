@@ -2,7 +2,7 @@
     <id>life.irony.selection-bridge-for-codex</id>
     <name>Selection Bridge for Codex</name>
     <version>1.0.0</version>
-    <vendor email="1151207663@qq.com">irony</vendor>
+    <vendor email="1151207663@qq.com" url="https://github.com/auroraslot/selection-bridge-for-codex">irony</vendor>
 
     <description><![CDATA[
         <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> running in any terminal.</p>
