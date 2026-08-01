@@ -16,7 +16,8 @@ repositories {
 dependencies {
     intellijPlatform {
         // 编译基线 = since-build 对应的最老平台，避免误用新版 API
-        intellijIdeaCommunity("2026.1")
+        // 2025.3 起 IDEA 为统一发行版，用 intellijIdea() 而非已废弃的 intellijIdeaCommunity()
+        intellijIdea("2026.1.4")
     }
 }
 
