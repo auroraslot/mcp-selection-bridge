@@ -1,0 +1,45 @@
+<idea-plugin>
+    <id>life.irony.selection-bridge-for-codex</id>
+    <name>Selection Bridge for Codex</name>
+    <version>1.0.0</version>
+    <vendor email="1151207663@qq.com">irony</vendor>
+
+    <description><![CDATA[
+        <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> running in any terminal.</p>
+
+        <p>The plugin runs a local MCP (Model Context Protocol) server on <code>127.0.0.1:63450</code>.
+        Register it once:</p>
+        <pre>codex mcp add idea-selection --url http://127.0.0.1:63450/mcp</pre>
+
+        <p>Then in any codex session just say <i>"look at the code I selected in the IDE"</i> —
+        codex calls the <code>get_idea_selection</code> tool and receives the file path,
+        line range and selected text. Works with all JetBrains IDEs.</p>
+
+        <p><b>Security note:</b> the server listens on loopback only, but while the IDE is running
+        any local process can query the current selection. Port and on/off switch:
+        <i>Settings | Tools | Selection Bridge for Codex</i>.</p>
+
+        <p>中文说明：把当前编辑器选中的代码通过本地 MCP 服务共享给终端里的 Codex CLI。
+        安装后执行一次上面的注册命令，之后在 codex 里说「看我在 IDE 里选中的代码」即可。</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <b>1.0.0</b> — Initial release: built-in streamable HTTP MCP server,
+        <code>get_idea_selection</code> tool, configurable port, on/off switch.
+    ]]></change-notes>
+
+    <idea-version since-build="261" until-build="263.*"/>
+    <depends>com.intellij.modules.platform</depends>
+
+    <applicationListeners>
+        <listener class="life.irony.codexbridge.SelectionHttpService"
+                  topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable parentId="tools"
+                                 instance="life.irony.codexbridge.BridgeConfigurable"
+                                 id="life.irony.codexbridge.settings"
+                                 displayName="Selection Bridge for Codex"/>
+    </extensions>
+</idea-plugin>
