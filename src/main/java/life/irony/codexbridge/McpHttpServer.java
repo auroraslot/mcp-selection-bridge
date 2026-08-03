@@ -29,10 +29,13 @@ import java.util.concurrent.Executors;
  * 另保留 GET /selection、GET /health 两个调试端点。
  *
  * codex 侧注册：codex mcp add idea-selection --url http://127.0.0.1:63450/mcp
+ * kimi  侧注册：kimi 内执行 /mcp-config，或在 ~/.kimi-code/mcp.json 的 mcpServers 里
+ *              加 {"idea-selection": {"url": "http://127.0.0.1:63450/mcp"}}
+ * （已对 codex 0.146 与 Kimi Code 0.31 双端实测互通，两者均为 streamable HTTP 客户端。）
  */
 public final class McpHttpServer {
     public static final String TOOL_NAME = "get_idea_selection";
-    private static final String SERVER_VERSION = "1.0.0";
+    private static final String SERVER_VERSION = "1.1.0";
     private static final long KEEPALIVE_MILLIS = 25_000L;
 
     private static final Gson GSON = new Gson();

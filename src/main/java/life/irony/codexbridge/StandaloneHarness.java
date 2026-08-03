@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 脱离 IDE 的协议测试入口：用假选区数据把 McpHttpServer 跑起来，
- * 供 curl / codex CLI 做真实客户端回归，避免反复重启 IDEA。
+ * 供 curl / codex / kimi CLI 做真实客户端回归，避免反复重启 IDEA。
  * 用法：java ... life.irony.codexbridge.StandaloneHarness [port]
  */
 public final class StandaloneHarness {

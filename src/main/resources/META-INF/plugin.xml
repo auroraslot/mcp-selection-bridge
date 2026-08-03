@@ -1,29 +1,41 @@
 <idea-plugin>
     <id>life.irony.selection-bridge-for-codex</id>
-    <name>Selection Bridge for Codex</name>
-    <version>1.0.0</version>
+    <name>Selection Bridge for Codex &amp; Kimi</name>
+    <version>1.1.0</version>
     <vendor email="1151207663@qq.com" url="https://github.com/auroraslot/selection-bridge-for-codex">irony</vendor>
 
     <description><![CDATA[
-        <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> running in any terminal.</p>
+        <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> or the
+        <b>Kimi Code CLI</b> running in any terminal.</p>
 
         <p>The plugin runs a local MCP (Model Context Protocol) server on <code>127.0.0.1:63450</code>.
         Register it once:</p>
+
+        <p><b>Codex:</b></p>
         <pre>codex mcp add idea-selection --url http://127.0.0.1:63450/mcp</pre>
 
-        <p>Then in any codex session just say <i>"look at the code I selected in the IDE"</i> —
-        codex calls the <code>get_idea_selection</code> tool and receives the file path,
-        line range and selected text. Works with all JetBrains IDEs.</p>
+        <p><b>Kimi Code:</b> run <code>/mcp-config</code> inside kimi, or add to
+        <code>~/.kimi-code/mcp.json</code>:</p>
+        <pre>{ "mcpServers": { "idea-selection": { "url": "http://127.0.0.1:63450/mcp" } } }</pre>
+
+        <p>Then in any codex or kimi session just say <i>"look at the code I selected in the IDE"</i> —
+        the agent calls the <code>get_idea_selection</code> tool and receives the file path,
+        line range and selected text. Works with all JetBrains IDEs, and with any other
+        MCP client that supports streamable HTTP.</p>
 
         <p><b>Security note:</b> the server listens on loopback only, but while the IDE is running
         any local process can query the current selection. Port and on/off switch:
-        <i>Settings | Tools | Selection Bridge for Codex</i>.</p>
+        <i>Settings | Tools | Selection Bridge for Codex &amp; Kimi</i>.</p>
 
-        <p>中文说明：把当前编辑器选中的代码通过本地 MCP 服务共享给终端里的 Codex CLI。
-        安装后执行一次上面的注册命令，之后在 codex 里说「看我在 IDE 里选中的代码」即可。</p>
+        <p>中文说明：把当前编辑器选中的代码通过本地 MCP 服务共享给终端里的 Codex CLI 或 Kimi Code CLI。
+        安装后按上面方式注册一次，之后在 codex / kimi 里说「看我在 IDE 里选中的代码」即可。</p>
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>1.1.0</b> — Kimi Code CLI support: registration instructions for kimi
+        (<code>~/.kimi-code/mcp.json</code> / <code>/mcp-config</code>), verified end-to-end
+        against both codex and kimi. No protocol changes. 新增 Kimi Code CLI 支持说明，
+        已对 codex 与 kimi 双端实测验证。<br/>
         <b>1.0.0</b> — Initial release: built-in streamable HTTP MCP server,
         <code>get_idea_selection</code> tool, configurable port, on/off switch.
     ]]></change-notes>
@@ -40,6 +52,6 @@
         <applicationConfigurable parentId="tools"
                                  instance="life.irony.codexbridge.BridgeConfigurable"
                                  id="life.irony.codexbridge.settings"
-                                 displayName="Selection Bridge for Codex"/>
+                                 displayName="Selection Bridge for Codex &amp; Kimi"/>
     </extensions>
 </idea-plugin>

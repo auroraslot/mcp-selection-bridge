@@ -11,14 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-/** Settings | Tools | Selection Bridge for Codex */
+/** Settings | Tools | Selection Bridge for Codex & Kimi */
 public class BridgeConfigurable implements Configurable {
     private JCheckBox enabledBox;
     private JTextField portField;
 
     @Override
     public String getDisplayName() {
-        return "Selection Bridge for Codex";
+        return "Selection Bridge for Codex & Kimi";
     }
 
     @Override
@@ -35,7 +35,8 @@ public class BridgeConfigurable implements Configurable {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for (JComponent c : new JComponent[]{enabledBox, portRow,
                 new JLabel("Changes take effect after restarting the IDE."),
-                new JLabel("Register in codex:  codex mcp add idea-selection --url http://127.0.0.1:<port>/mcp")}) {
+                new JLabel("Register in codex:  codex mcp add idea-selection --url http://127.0.0.1:<port>/mcp"),
+                new JLabel("Register in kimi:  run /mcp-config inside kimi, or add the URL to ~/.kimi-code/mcp.json")}) {
             c.setAlignmentX(0f);
             panel.add(c);
             panel.add(Box.createVerticalStrut(8));
