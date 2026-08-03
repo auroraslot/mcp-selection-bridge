@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import java.util.List;
 

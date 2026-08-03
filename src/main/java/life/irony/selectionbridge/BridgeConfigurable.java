@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.options.Configurable;
@@ -17,9 +17,9 @@ import javax.swing.SwingUtilities;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 
-/** Settings | Tools | Selection Bridge for Codex & Kimi */
+/** Settings | Tools | MCP Selection Bridge */
 public class BridgeConfigurable implements Configurable {
-    private static final String DIALOG_TITLE = "Selection Bridge for Codex & Kimi";
+    private static final String DIALOG_TITLE = "MCP Selection Bridge";
 
     private JCheckBox enabledBox;
     private JTextField portField;

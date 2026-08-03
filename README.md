@@ -1,6 +1,6 @@
-# Selection Bridge for Codex & Kimi
+# MCP Selection Bridge
 
-Share the code you select in a JetBrains IDE with the [OpenAI Codex CLI](https://github.com/openai/codex) or the [Kimi Code CLI](https://moonshotai.github.io/kimi-code/) running in any terminal — the missing "look at what I highlighted" link for terminal-based agent users.
+Share the code you select in a JetBrains IDE with the [OpenAI Codex CLI](https://github.com/openai/codex), the [Kimi Code CLI](https://moonshotai.github.io/kimi-code/) or any other MCP-capable agent running in any terminal — the missing "look at what I highlighted" link for terminal-based agent users.
 
 [中文说明](#中文说明)
 
@@ -23,7 +23,7 @@ Any other MCP client that speaks streamable HTTP works too.
 
 1. Install the plugin (JetBrains Marketplace, or *Settings | Plugins | ⚙ | Install Plugin from Disk…* with the release zip).
 2. Restart the IDE.
-3. Register the server with your CLI (once): open *Settings | Tools | Selection Bridge for Codex & Kimi* and click **Register in Codex** / **Register in Kimi Code** — done.
+3. Register the server with your CLI (once): open *Settings | Tools | MCP Selection Bridge* and click **Register in Codex** / **Register in Kimi Code** — done.
 
 Prefer doing it by hand? Manual equivalents:
 
@@ -59,7 +59,7 @@ Debug endpoints (plain JSON, useful for troubleshooting): `GET /health`, `GET /s
 
 ## Settings
 
-*Settings | Tools | Selection Bridge for Codex & Kimi* — enable/disable, change port, one-click registration buttons. Changes take effect after an IDE restart. If you change the port, click the register buttons again (they overwrite the old entry) or re-register manually with the new URL.
+*Settings | Tools | MCP Selection Bridge* — enable/disable, change port, one-click registration buttons. Changes take effect after an IDE restart. If you change the port, click the register buttons again (they overwrite the old entry) or re-register manually with the new URL.
 
 ## Security notes
 
@@ -87,7 +87,7 @@ scripts/build-with-jbr.sh    # zip in out/
 Protocol testing without restarting the IDE — run the standalone harness with fake selection data, then point your CLI at it:
 
 ```bash
-java -cp "out/classes:$IDEA_LIBS" life.irony.codexbridge.StandaloneHarness 63451
+java -cp "out/classes:$IDEA_LIBS" life.irony.selectionbridge.StandaloneHarness 63451
 codex mcp add sel-test --url http://127.0.0.1:63451/mcp
 # kimi: add {"mcpServers":{"sel-test":{"url":"http://127.0.0.1:63451/mcp"}}} to .kimi-code/mcp.json
 ```
@@ -98,7 +98,7 @@ codex mcp add sel-test --url http://127.0.0.1:63451/mcp
 
 **原理**：插件在 IDE 内运行一个只监听 `127.0.0.1:63450` 的 MCP（streamable HTTP）服务，暴露 `get_idea_selection` 工具，返回当前各项目窗口选中的文件路径、行号与文本（聚焦窗口优先）。任何支持 streamable HTTP 的 MCP 客户端均可接入。
 
-**安装**：装插件 → 重启 IDE → 注册一次：打开 *Settings | Tools | Selection Bridge for Codex & Kimi*，点 **Register in Codex** / **Register in Kimi Code** 按钮即可。也可手动注册：
+**安装**：装插件 → 重启 IDE → 注册一次：打开 *Settings | Tools | MCP Selection Bridge*，点 **Register in Codex** / **Register in Kimi Code** 按钮即可。也可手动注册：
 
 - **Codex**：`codex mcp add idea-selection --url http://127.0.0.1:63450/mcp`
 - **Kimi Code**：在 kimi 里执行 `/mcp-config` 交互添加，或编辑 `~/.kimi-code/mcp.json`（项目级为 `.kimi-code/mcp.json`）：
@@ -111,7 +111,7 @@ codex mcp add sel-test --url http://127.0.0.1:63451/mcp
 
 **使用**：在 IDE 里选中代码，然后在 codex / kimi 里说「看我在 IDE 里选中的代码」。kimi 里工具名显示为 `mcp__idea-selection__get_idea_selection`，可用 `/mcp` 查看连接状态。
 
-**安全提示**：服务仅监听回环地址，网络不可达；但 IDE 运行期间本机任意进程都可通过该端口读取当前选区，请知悉。可在 *Settings | Tools | Selection Bridge for Codex & Kimi* 中关闭或改端口（重启生效）。
+**安全提示**：服务仅监听回环地址，网络不可达；但 IDE 运行期间本机任意进程都可通过该端口读取当前选区，请知悉。可在 *Settings | Tools | MCP Selection Bridge* 中关闭或改端口（重启生效）。
 
 **兼容性**：已用 Codex CLI 0.146 与 Kimi Code CLI 0.31 双端实测验证。
 

@@ -1,15 +1,15 @@
 <idea-plugin>
-    <id>life.irony.selection-bridge-for-codex</id>
-    <name>Selection Bridge for Codex &amp; Kimi</name>
+    <id>life.irony.mcp-selection-bridge</id>
+    <name>MCP Selection Bridge</name>
     <version>1.1.0</version>
-    <vendor email="1151207663@qq.com" url="https://github.com/auroraslot/selection-bridge-for-codex">irony</vendor>
+    <vendor email="1151207663@qq.com" url="https://github.com/auroraslot/mcp-selection-bridge">irony</vendor>
 
     <description><![CDATA[
         <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> or the
         <b>Kimi Code CLI</b> running in any terminal.</p>
 
         <p>The plugin runs a local MCP (Model Context Protocol) server on <code>127.0.0.1:63450</code>.
-        Register it once with one click: <i>Settings | Tools | Selection Bridge for Codex &amp; Kimi</i> →
+        Register it once with one click: <i>Settings | Tools | MCP Selection Bridge</i> →
         <b>Register in Codex</b> / <b>Register in Kimi Code</b>. Manual equivalents:</p>
 
         <p><b>Codex:</b></p>
@@ -26,7 +26,7 @@
 
         <p><b>Security note:</b> the server listens on loopback only, but while the IDE is running
         any local process can query the current selection. Port and on/off switch:
-        <i>Settings | Tools | Selection Bridge for Codex &amp; Kimi</i>.</p>
+        <i>Settings | Tools | MCP Selection Bridge</i>.</p>
 
         <p>中文说明：把当前编辑器选中的代码通过本地 MCP 服务共享给终端里的 Codex CLI 或 Kimi Code CLI。
         安装后按上面方式注册一次，之后在 codex / kimi 里说「看我在 IDE 里选中的代码」即可。</p>
@@ -34,8 +34,10 @@
 
     <change-notes><![CDATA[
         <b>1.1.0</b> — Kimi Code CLI support, verified end-to-end against both codex and kimi
-        (no protocol changes), plus one-click <b>Register in Codex</b> / <b>Register in Kimi Code</b>
-        buttons in settings. 新增 Kimi Code CLI 支持（双端实测验证）与设置页一键注册按钮。<br/>
+        (no protocol changes), one-click <b>Register in Codex</b> / <b>Register in Kimi Code</b>
+        buttons in settings, and renamed to <b>MCP Selection Bridge</b> (works with any
+        streamable-HTTP MCP client). 新增 Kimi Code CLI 支持（双端实测验证）与设置页一键注册按钮，
+        并更名为 MCP Selection Bridge。<br/>
         <b>1.0.0</b> — Initial release: built-in streamable HTTP MCP server,
         <code>get_idea_selection</code> tool, configurable port, on/off switch.
     ]]></change-notes>
@@ -44,14 +46,14 @@
     <depends>com.intellij.modules.platform</depends>
 
     <applicationListeners>
-        <listener class="life.irony.codexbridge.SelectionHttpService"
+        <listener class="life.irony.selectionbridge.SelectionHttpService"
                   topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable parentId="tools"
-                                 instance="life.irony.codexbridge.BridgeConfigurable"
-                                 id="life.irony.codexbridge.settings"
-                                 displayName="Selection Bridge for Codex &amp; Kimi"/>
+                                 instance="life.irony.selectionbridge.BridgeConfigurable"
+                                 id="life.irony.selectionbridge.settings"
+                                 displayName="MCP Selection Bridge"/>
     </extensions>
 </idea-plugin>

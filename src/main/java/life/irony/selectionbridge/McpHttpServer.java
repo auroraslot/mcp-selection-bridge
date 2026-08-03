@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -53,7 +53,7 @@ public final class McpHttpServer {
     public void start() throws IOException {
         server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0);
         executor = Executors.newCachedThreadPool(r -> {
-            Thread t = new Thread(r, "codex-selection-mcp");
+            Thread t = new Thread(r, "mcp-selection-bridge");
             t.setDaemon(true);
             return t;
         });
@@ -130,7 +130,7 @@ public final class McpHttpServer {
                 caps.add("tools", new JsonObject());
                 result.add("capabilities", caps);
                 JsonObject info = new JsonObject();
-                info.addProperty("name", "selection-bridge-for-codex");
+                info.addProperty("name", "mcp-selection-bridge");
                 info.addProperty("version", SERVER_VERSION);
                 result.add("serverInfo", info);
                 sendRpcResult(ex, id, result, UUID.randomUUID().toString());

@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -8,7 +8,7 @@ import com.intellij.openapi.components.Storage;
 
 /** 应用级持久化设置：是否启用、监听端口。改动需重启 IDE 生效。 */
 @Service
-@State(name = "SelectionBridgeForCodex", storages = @Storage("selectionBridgeForCodex.xml"))
+@State(name = "McpSelectionBridge", storages = @Storage("mcpSelectionBridge.xml"))
 public final class BridgeSettings implements PersistentStateComponent<BridgeSettings.State> {
 
     public static class State {

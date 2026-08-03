@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

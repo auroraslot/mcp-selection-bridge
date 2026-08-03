@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 import com.intellij.ide.AppLifecycleListener;
 import com.intellij.openapi.diagnostic.Logger;
@@ -17,15 +17,15 @@ public class SelectionHttpService implements AppLifecycleListener {
         if (!STARTED.compareAndSet(false, true)) return;
         BridgeSettings.State settings = BridgeSettings.getInstance().getState();
         if (!settings.enabled) {
-            LOG.info("Selection Bridge for Codex is disabled in settings");
+            LOG.info("MCP Selection Bridge is disabled in settings");
             return;
         }
         try {
             McpHttpServer server = new McpHttpServer(settings.port, new IdeSelectionProvider());
             server.start();
-            LOG.info("Selection Bridge for Codex listening on 127.0.0.1:" + server.getPort());
+            LOG.info("MCP Selection Bridge listening on 127.0.0.1:" + server.getPort());
         } catch (IOException e) {
-            LOG.warn("Selection Bridge for Codex failed to start on port " + settings.port
+            LOG.warn("MCP Selection Bridge failed to start on port " + settings.port
                     + " (is another IDE instance using it?)", e);
         }
     }

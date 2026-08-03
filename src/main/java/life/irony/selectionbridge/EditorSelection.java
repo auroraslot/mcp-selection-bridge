@@ -1,4 +1,4 @@
-package life.irony.codexbridge;
+package life.irony.selectionbridge;
 
 /** 单个编辑器窗口的选区快照。字段直接被 Gson 序列化进 /selection 调试端点。 */
 public class EditorSelection {

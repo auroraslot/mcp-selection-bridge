@@ -1,1 +1,1 @@
-rootProject.name = "selection-bridge-for-codex"
+rootProject.name = "mcp-selection-bridge"
