@@ -1,13 +1,13 @@
 <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
   <!-- 未选中的代码行 -->
-  <g fill="#8A96A8">
+  <g fill="#7A8494">
     <rect x="4" y="7" width="19" height="5" rx="2.5"/>
     <rect x="4" y="28" width="12" height="5" rx="2.5"/>
   </g>
   <!-- 当前选区，以及被桥接送出的箭头 -->
-  <g fill="#3574F0">
+  <g fill="#548AF7">
     <rect x="4" y="17.5" width="15" height="5" rx="2.5"/>
     <rect x="21.5" y="18.25" width="8" height="3.5" rx="1.75"/>
-    <path d="M29 16 L34.5 20 L29 24 Z" stroke="#3574F0" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M29 16 L34.5 20 L29 24 Z" stroke="#548AF7" stroke-width="1.6" stroke-linejoin="round"/>
   </g>
 </svg>

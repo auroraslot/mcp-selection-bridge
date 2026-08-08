@@ -2,45 +2,62 @@
     <!-- Marketplace 的 plugin ID 终身不可变，必须保持首发时的值；对外展示用下面的 <name> -->
     <id>life.irony.selection-bridge-for-codex</id>
     <name>MCP Selection Bridge</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <vendor email="1151207663@qq.com" url="https://github.com/auroraslot/mcp-selection-bridge">irony</vendor>
 
     <description><![CDATA[
-        <p>Share your current editor selection with the <b>OpenAI Codex CLI</b> or the
-        <b>Kimi Code CLI</b> running in any terminal.</p>
+        <p>Share your JetBrains editor selection with terminal AI CLIs (Codex, Kimi Code)
+        through a local MCP server.</p>
 
-        <p>The plugin runs a local MCP (Model Context Protocol) server on <code>127.0.0.1:63450</code>.
-        Register it once with one click: <i>Settings | Tools | MCP Selection Bridge</i> →
-        <b>Register in Codex</b> / <b>Register in Kimi Code</b>. Manual equivalents:</p>
+        <h3>解决什么问题</h3>
+        <p>在终端里用 <b>Codex CLI</b> 或 <b>Kimi Code CLI</b> 时，AI 看不到你在 IDE 里框选的那段代码。
+        以往只能复制粘贴，或者手工报出文件名和行号。装上这个插件后，直接对它说
+        「看我在 IDE 里选中的代码」，它自己就能读到。</p>
 
-        <p><b>Codex:</b></p>
+        <h3>工作原理</h3>
+        <p>插件在 IDE 内启动一个 MCP（Model Context Protocol）服务，仅监听
+        <code>127.0.0.1:63450</code>，对外暴露一个工具 <code>get_idea_selection</code>，
+        返回当前选中内容的文件路径、行号范围与文本。多个项目窗口同时打开时，聚焦窗口优先。</p>
+
+        <h3>安装与注册</h3>
+        <p>装好插件并重启 IDE，打开 <i>Settings | Tools | MCP Selection Bridge</i>，
+        点 <b>Register in Codex</b> 或 <b>Register in Kimi Code</b> 按钮，注册一次即长期生效。</p>
+
+        <p>也可以手动注册。<b>Codex：</b></p>
         <pre>codex mcp add idea-selection --url http://127.0.0.1:63450/mcp</pre>
 
-        <p><b>Kimi Code:</b> run <code>/mcp-config</code> inside kimi, or add to
-        <code>~/.kimi-code/mcp.json</code>:</p>
+        <p><b>Kimi Code：</b>在会话里执行 <code>/mcp-config</code> 交互添加，
+        或写入 <code>~/.kimi-code/mcp.json</code>：</p>
         <pre>{ "mcpServers": { "idea-selection": { "url": "http://127.0.0.1:63450/mcp" } } }</pre>
 
-        <p>Then in any codex or kimi session just say <i>"look at the code I selected in the IDE"</i> —
-        the agent calls the <code>get_idea_selection</code> tool and receives the file path,
-        line range and selected text. Works with all JetBrains IDEs, and with any other
-        MCP client that supports streamable HTTP.</p>
+        <h3>兼容性</h3>
+        <p>支持全系 JetBrains IDE（IntelliJ IDEA、PyCharm、WebStorm、GoLand 等），
+        只使用平台公共 API。除 Codex 与 Kimi Code 外，任何支持 streamable HTTP 的 MCP
+        客户端都可接入。已用 Codex CLI 0.146 与 Kimi Code CLI 0.31 双端实测验证。</p>
 
-        <p><b>Security note:</b> the server listens on loopback only, but while the IDE is running
-        any local process can query the current selection. Port and on/off switch:
-        <i>Settings | Tools | MCP Selection Bridge</i>.</p>
+        <h3>安全说明</h3>
+        <p>服务只绑定回环地址，外部网络不可达。但需要知悉：IDE 运行期间，
+        本机任意进程都可以通过该端口读取你当前的选区内容。可在
+        <i>Settings | Tools | MCP Selection Bridge</i> 中随时关闭插件或修改端口。</p>
 
-        <p>中文说明：把当前编辑器选中的代码通过本地 MCP 服务共享给终端里的 Codex CLI 或 Kimi Code CLI。
-        安装后按上面方式注册一次，之后在 codex / kimi 里说「看我在 IDE 里选中的代码」即可。</p>
+        <h3>In English</h3>
+        <p>This plugin runs a local MCP (streamable HTTP) server inside your JetBrains IDE on
+        <code>127.0.0.1:63450</code>, exposing a <code>get_idea_selection</code> tool that returns
+        the file path, line range and text of your current editor selection. Register it once from
+        <i>Settings | Tools | MCP Selection Bridge</i>, then ask your CLI agent to
+        <i>"look at the code I selected in the IDE"</i>. The server binds to loopback only, but any
+        local process can read the selection while the IDE is running.</p>
     ]]></description>
 
     <change-notes><![CDATA[
-        <b>1.1.0</b> — Kimi Code CLI support, verified end-to-end against both codex and kimi
-        (no protocol changes), one-click <b>Register in Codex</b> / <b>Register in Kimi Code</b>
-        buttons in settings, and renamed to <b>MCP Selection Bridge</b> (works with any
-        streamable-HTTP MCP client). 新增 Kimi Code CLI 支持（双端实测验证）与设置页一键注册按钮，
-        并更名为 MCP Selection Bridge。<br/>
-        <b>1.0.0</b> — Initial release: built-in streamable HTTP MCP server,
-        <code>get_idea_selection</code> tool, configurable port, on/off switch.
+        <b>1.1.1</b> — 全新插件图标；插件介绍改为以中文为主，并补充了原理与安全说明。
+        New plugin icon; description rewritten with Chinese as the primary language.<br/>
+        <b>1.1.0</b> — 新增 Kimi Code CLI 支持（协议未改动，codex 与 kimi 双端实测验证）；
+        设置页新增 <b>Register in Codex</b> / <b>Register in Kimi Code</b> 一键注册按钮；
+        更名为 <b>MCP Selection Bridge</b>（适用于任何 streamable-HTTP MCP 客户端）。
+        Added Kimi Code CLI support, one-click registration buttons, and renamed the plugin.<br/>
+        <b>1.0.0</b> — 首个版本：内置 streamable HTTP MCP 服务、<code>get_idea_selection</code>
+        工具、可配置端口与开关。Initial release.
     ]]></change-notes>
 
     <idea-version since-build="261" until-build="263.*"/>
